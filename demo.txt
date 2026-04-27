@@ -1,1 +1,128 @@
-hello programmers
+LOGINCONTROLLER.java
+package com.example.demo.controller;
+
+import com.example.demo.model.LoginModel;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class LoginController {
+
+    @GetMapping("/")
+    public String showLogin() {
+        return "index";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute LoginModel loginModel, Model model) {
+        boolean result = loginModel.isValid();
+        model.addAttribute("result", result);
+        return "index";
+    }
+}
+LOGINMODLE.java
+package com.example.demo.model;
+
+public class LoginModel {
+
+    private String username;
+    private String password;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isValid() {
+        return username.equals("admin") && password.equals("1234");
+    }
+}
+INDEX.html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <h2>Login Page</h2>
+    <form action="/login" method="post">
+        <input type="text" name="username" placeholder="Enter Username" required><br><br>
+        <input type="password" name="password" placeholder="Enter Password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <h3 th:if="${result != null}">
+        <span th:if="${result}">Login Successful</span>
+        <span th:unless="${result}">Invalid Credentials</span>
+    </h3>
+</body>
+</html>
+
+
+AGECONTROLLER.java
+package com.example.demo.controller;
+
+import com.example.demo.model.AgeModel;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class AgeController {
+
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+
+    @PostMapping("/check")
+    public String check(@RequestParam int age, Model model) {
+        AgeModel m = new AgeModel();
+        m.setAge(age);
+        model.addAttribute("result", m.isValid());
+        return "index";
+    }
+}
+AGEMODEL.java
+package com.example.demo.model;
+
+public class AgeModel {
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isValid() {
+        return age >= 18;
+    }
+}
+AGEINDEX.html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <h2>Enter Age</h2>
+    <form action="/check" method="post">
+        <input type="number" name="age" required>
+        <button type="submit">Check</button>
+    </form>
+
+    <h3 th:if="${result != null}">
+        <span th:if="${result}">Valid Age</span>
+        <span th:unless="${result}">Invalid Age</span>
+    </h3>
+</body>
+</html>

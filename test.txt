@@ -1,0 +1,54 @@
+1)Sudo apt update
+2) su
+3) sudo usermod -aG sudo grace
+4) Sudo grace
+5) sudo apt update (1).
+6)sudo apt install Software-Properties-common
+7) Sudo add-apt-repository --yes --update ppa: ansible/ansible.
+8) Sudo apt install
+9) Sudo apt install ansible
+10) ansible --Version
+11) Sudo nano etc/default/locale
+
+→File
+
+Lang=en-US.UTF-8"
+
+Language = "en-US.UTF-8"
+
+12) reboot
+15) ansible --version (10)
+14) ssh-keygen -t rsa - C "dev default"
+15) hostname -I
+16) ls -la .ssh
+17) Sudo apt install openssh-sewer
+18) Sudo systemctl restart sshd
+19) ssh-copy-id -i ~/ssh/id-rsa.pub "10.0.2.15"
+20) ssh 10.0.2.15
+21) Sudo nano inventory
+
+→[File]
+
+[Servers]
+
+10.0.2.15
+
+22) sudo nano Playbook yamı
+->[file]
+name: Echo
+
+hosts: servers
+
+Connection: Locale
+
+Task:
+
+-name: debug msg
+
+debug:
+
+msg: Hello
+
+23) ansible all-key-file ~/.ssh/id_rsa - i inventory -m ping
+
+24) ansible-playbook -i inventory Playbook.yaml.
